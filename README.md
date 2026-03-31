@@ -61,35 +61,16 @@ A plataforma permite:
 src/
 
 ├── assets/
-  logo.png
-  silhueta.png
+  
   
 ├── components/
-  AnimalCard.css
-  AnimalCard.jsx
-  Footer.css
-  Footer.jsx
-  Navbar.css
-  Navbar.jsx
-  PrtectedRoute.jsx
   
 ├── pages/
-  AddAnimal.jsx
-  Animal.ccs
-  Animal.jsx
-  Auth.css
-  Dashboard.css
-  Dashboard.jsx
-  EditAnimal.jsx
-  FormAnimal.css
-  Home.css
-  Home.jsx
-  Login.jsx
-  Register.jsx
+  
   
 ├── services/
-  supabaseClient.js
+  
   
 ├── styles/
-  global.css
+  
 
