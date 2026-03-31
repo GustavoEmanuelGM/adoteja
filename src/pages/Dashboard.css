@@ -1,0 +1,245 @@
+/* ===== DASHBOARD ===== */
+
+/* Header com avatar */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.dashboard-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--verde);
+  color: var(--branco);
+  font-size: 1.8rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dashboard-header h1 {
+  font-size: 1.7rem;
+  font-weight: 900;
+  color: var(--verde-escuro);
+  margin-bottom: 4px;
+}
+
+.dashboard-email {
+  color: var(--texto-claro);
+  font-size: 0.93rem;
+}
+
+/* Cards de resumo */
+.dashboard-resumo {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+.resumo-card {
+  background: var(--branco);
+  border-radius: var(--radius);
+  box-shadow: var(--sombra);
+  padding: 22px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.resumo-numero {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: var(--verde-escuro);
+  line-height: 1;
+}
+
+.resumo-label {
+  font-size: 0.88rem;
+  color: var(--texto-claro);
+  font-weight: 600;
+}
+
+/* Seção */
+.dashboard-secao {
+  background: var(--branco);
+  border-radius: var(--radius);
+  box-shadow: var(--sombra);
+  padding: 28px;
+}
+
+.dashboard-secao-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.dashboard-secao-header h2 {
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--verde-escuro);
+}
+
+/* Vazio */
+.dashboard-vazio {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--texto-claro);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Lista de animais */
+.meus-animais-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.meu-animal-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1.5px solid var(--borda);
+  border-radius: var(--radius-sm);
+  background: var(--fundo);
+  flex-wrap: wrap;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.meu-animal-row:hover {
+  border-color: var(--verde);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.meu-animal-foto,
+.meu-animal-foto-fallback {
+  width: 70px;
+  height: 56px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.meu-animal-foto {
+  object-fit: cover;
+  background: #e8f5e9;
+  display: block;
+}
+
+.meu-animal-foto-fallback {
+  background: #f2f3f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.meu-animal-foto-fallback img {
+  width: 58%;
+  height: auto;
+  object-fit: contain;
+  object-position: center;
+  opacity: 0.6;
+  display: block;
+  transform: translate(2px, 1px);
+}
+
+.meu-animal-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 140px;
+}
+.meu-animal-info strong {
+  font-size: 1.03rem;
+  color: var(--texto);
+}
+.meu-animal-info span {
+  font-size: 0.85rem;
+  color: var(--texto-claro);
+}
+
+/* Badge de status */
+.badge-status {
+  padding: 4px 14px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.badge-disponivel {
+  background: #E8F5E9;
+  color: var(--verde-escuro);
+}
+
+.badge-adotado {
+  background: #F5F5F5;
+  color: #757575;
+}
+
+.badge-em_processo {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+/* Ações e confirmação */
+.meu-animal-acoes {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.meu-animal-acoes .btn-outline,
+.meu-animal-acoes .btn-danger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.confirmar-exclusao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.confirmar-exclusao span {
+  font-size: 0.88rem;
+  color: #D32F2F;
+  font-weight: 700;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 768px) {
+  .dashboard-resumo {
+    grid-template-columns: 1fr;
+  }
+
+  .meu-animal-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .meu-animal-acoes {
+    width: 100%;
+  }
+
+  .dashboard-secao {
+    padding: 20px 16px;
+  }
+}

@@ -1,0 +1,155 @@
+/* ===== PÁGINA DE ANIMAIS ===== */
+.animals-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.animals-header h1 {
+  font-size: 2.1rem;
+  font-weight: 900;
+  color: var(--verde-escuro);
+  margin-bottom: 8px;
+}
+.animals-header p {
+  color: var(--texto-claro);
+  font-size: 1.05rem;
+}
+
+/* Filtros */
+.filtros {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+.input-busca-wrap {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.busca-icone {
+  position: absolute;
+  left: 16px;
+  color: var(--texto-claro);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+.input-busca {
+  width: 100%;
+  padding: 13px 18px 13px 46px;
+  border: 2px solid var(--borda);
+  border-radius: 50px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border var(--transition);
+  background: var(--branco);
+}
+.input-busca:focus {
+  outline: none;
+  border-color: var(--verde);
+}
+.select-especie {
+  padding: 13px 20px;
+  border: 2px solid var(--borda);
+  border-radius: 50px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: var(--branco);
+  cursor: pointer;
+  transition: border var(--transition);
+  min-width: 200px;
+}
+.select-especie:focus {
+  outline: none;
+  border-color: var(--verde);
+}
+
+/* Grid */
+.animals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 26px;
+}
+
+/* Sem resultados */
+.sem-resultados {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--texto-claro);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.sem-resultados svg {
+  width: 48px;
+  height: 48px;
+  color: var(--borda);
+  margin-bottom: 6px;
+}
+.sem-resultados h3 {
+  font-size: 1.4rem;
+  color: var(--texto);
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-box {
+  background: var(--branco);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  max-width: 440px;
+  width: 100%;
+  position: relative;
+}
+.modal-box h2 {
+  font-size: 1.4rem;
+  color: var(--verde-escuro);
+  margin-bottom: 14px;
+}
+.modal-box p {
+  color: var(--texto-claro);
+  line-height: 1.6;
+}
+.modal-botoes {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+.modal-fechar {
+  margin-top: 18px;
+  background: none;
+  border: none;
+  color: var(--texto-claro);
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.modal-fechar:hover {
+  color: var(--texto);
+}
+
+@media (max-width: 600px) {
+  .filtros {
+    flex-direction: column;
+  }
+  .select-especie {
+    width: 100%;
+  }
+}

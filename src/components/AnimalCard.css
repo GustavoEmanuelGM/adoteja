@@ -1,0 +1,149 @@
+/* ===== ANIMAL CARD ===== */
+.animal-card {
+  background: var(--branco);
+  border-radius: var(--radius);
+  box-shadow: var(--sombra);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.animal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--sombra-hover);
+}
+
+/* Foto ou silhueta */
+.animal-foto-wrap {
+  position: relative;
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  background: #E8F5E9;
+}
+.animal-foto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.animal-card:hover .animal-foto {
+  transform: scale(1.05);
+}
+/* Fallback com silhueta */
+.animal-foto-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sombra);
+}
+
+.animal-fallback-img {
+  width: 70%;
+  height: auto;
+  object-fit: contain;
+  opacity: 0.7;
+}
+
+/* Badge de status */
+.animal-status {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+}
+.status-verde {
+  background: #E8F5E9;
+  color: var(--verde-escuro);
+  border: 1.5px solid var(--verde);
+}
+.status-laranja {
+  background: #FFF3E0;
+  color: #E65100;
+  border: 1.5px solid var(--laranja);
+}
+.status-cinza {
+  background: #F5F5F5;
+  color: #757575;
+  border: 1.5px solid #BDBDBD;
+}
+
+/* Info */
+.animal-info {
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 10px;
+}
+.animal-nome {
+  font-size: 1.22rem;
+  font-weight: 800;
+  color: var(--texto);
+  margin: 0;
+}
+
+/* Tags de espécie, raça, porte */
+.animal-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tag {
+  background: #F1F8E9;
+  color: var(--verde-escuro);
+  border-radius: 50px;
+  padding: 3px 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+/* Detalhes (idade, cidade) */
+.animal-detalhes {
+  display: flex;
+  gap: 14px;
+  font-size: 0.9rem;
+  color: var(--texto-claro);
+}
+.animal-detalhes span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Descrição curta */
+.animal-descricao {
+  font-size: 0.91rem;
+  color: var(--texto-claro);
+  line-height: 1.5;
+  flex: 1;
+}
+
+/* Botão interesse */
+.btn-interesse {
+  background: var(--laranja);
+  color: var(--branco);
+  border: none;
+  border-radius: 50px;
+  padding: 11px 0;
+  font-size: 0.97rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  margin-top: 4px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.btn-interesse:hover {
+  background: var(--laranja-claro);
+  transform: translateY(-2px);
+}

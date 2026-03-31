@@ -1,0 +1,65 @@
+/* ===== FORMULÁRIO DE ANIMAL ===== */
+.form-animal-card {
+  background: var(--branco);
+  border-radius: var(--radius);
+  box-shadow: var(--sombra);
+  padding: 40px 44px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.form-animal-header {
+  margin-bottom: 28px;
+}
+.form-animal-header h1 {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--verde-escuro);
+  margin-bottom: 8px;
+}
+.form-animal-header p {
+  color: var(--texto-claro);
+  font-size: 0.97rem;
+}
+
+/* Duas colunas por linha em telas maiores */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* Botões do formulário */
+.form-botoes {
+  display: flex;
+  gap: 14px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.form-botoes a,
+.form-botoes button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+
+@media (max-width: 600px) {
+  .form-animal-card {
+    padding: 26px 18px;
+  }
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  .form-botoes {
+    flex-direction: column-reverse;
+  }
+  .form-botoes button,
+  .form-botoes a {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+}
