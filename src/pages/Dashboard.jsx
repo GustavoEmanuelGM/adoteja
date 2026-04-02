@@ -19,7 +19,19 @@ function Dashboard({ user }) {
     async function carregarMeusAnimais() {
       const { data, error } = await supabase
         .from('animals')
-        .select('*')
+        .select(`
+            id,
+            nome,
+            idade,
+            especie,
+            raca,
+            porte,
+            cidade,
+            descricao,
+            foto_url,
+            status,
+            created_at
+          `)
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
 
@@ -121,7 +133,7 @@ function Dashboard({ user }) {
                       src={animal.foto_url}
                       alt={animal.nome}
                       className="meu-animal-foto"
-                      onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='block' }}
+                      onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block' }}
                     />
                   ) : null}
                   <div

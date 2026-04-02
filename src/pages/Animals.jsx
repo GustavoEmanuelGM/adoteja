@@ -22,7 +22,19 @@ function Animals({ user }) {
 
       const { data, error } = await supabase
         .from('animals')
-        .select('*')
+        .select(`
+                id,
+                nome,
+                idade,
+                especie,
+                raca,
+                porte,
+                cidade,
+                descricao,
+                foto_url,
+                status,
+                created_at
+              `)
         .order('created_at', { ascending: false })
 
       if (!error) {
