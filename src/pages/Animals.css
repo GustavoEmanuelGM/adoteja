@@ -3,24 +3,29 @@
   text-align: center;
   margin-bottom: 36px;
 }
+
 .animals-header h1 {
   font-size: 2.1rem;
   font-weight: 900;
   color: var(--verde-escuro);
   margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
+
 .animals-header p {
   color: var(--texto-claro);
   font-size: 1.05rem;
+  line-height: 1.6;
 }
 
-/* Filtros */
+/* ===== FILTROS ===== */
 .filtros {
   display: flex;
   gap: 14px;
   margin-bottom: 36px;
   flex-wrap: wrap;
 }
+
 .input-busca-wrap {
   flex: 1;
   min-width: 200px;
@@ -28,6 +33,7 @@
   display: flex;
   align-items: center;
 }
+
 .busca-icone {
   position: absolute;
   left: 16px;
@@ -36,6 +42,7 @@
   align-items: center;
   pointer-events: none;
 }
+
 .input-busca {
   width: 100%;
   padding: 13px 18px 13px 46px;
@@ -43,13 +50,16 @@
   border-radius: 50px;
   font-size: 1rem;
   font-family: inherit;
-  transition: border var(--transition);
+  transition: border var(--transition), box-shadow var(--transition);
   background: var(--branco);
 }
+
 .input-busca:focus {
   outline: none;
   border-color: var(--verde);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.08);
 }
+
 .select-especie {
   padding: 13px 20px;
   border: 2px solid var(--borda);
@@ -58,22 +68,24 @@
   font-family: inherit;
   background: var(--branco);
   cursor: pointer;
-  transition: border var(--transition);
+  transition: border var(--transition), box-shadow var(--transition);
   min-width: 200px;
 }
+
 .select-especie:focus {
   outline: none;
   border-color: var(--verde);
+  box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.08);
 }
 
-/* Grid */
+/* ===== GRID ===== */
 .animals-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 26px;
 }
 
-/* Sem resultados */
+/* ===== SEM RESULTADOS ===== */
 .sem-resultados {
   text-align: center;
   padding: 60px 20px;
@@ -83,73 +95,149 @@
   align-items: center;
   gap: 10px;
 }
+
 .sem-resultados svg {
   width: 48px;
   height: 48px;
   color: var(--borda);
   margin-bottom: 6px;
 }
+
 .sem-resultados h3 {
   font-size: 1.4rem;
   color: var(--texto);
 }
 
-/* Modal */
+/* ===== MODAL ===== */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
 }
+
 .modal-box {
   background: var(--branco);
   border-radius: var(--radius);
-  padding: 36px 32px;
+  padding: 32px 28px;
   max-width: 440px;
   width: 100%;
   position: relative;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  text-align: center;
 }
+
 .modal-box h2 {
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   color: var(--verde-escuro);
   margin-bottom: 14px;
+  letter-spacing: -0.4px;
 }
+
 .modal-box p {
   color: var(--texto-claro);
   line-height: 1.6;
 }
-.modal-botoes {
-  display: flex;
-  gap: 12px;
-  margin-top: 22px;
-  flex-wrap: wrap;
+
+.modal-info-animal {
+  background: #f8f9fa;
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 18px 0 20px;
+  text-align: left;
+  border: 1px solid rgba(0, 0, 0, 0.04);
 }
+
+.modal-info-animal p {
+  margin: 6px 0;
+}
+
+.btn-whatsapp {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 18px;
+  background: #25d366;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 20px rgba(37, 211, 102, 0.18);
+}
+
+.btn-whatsapp:hover {
+  transform: translateY(-1px);
+  opacity: 0.96;
+  box-shadow: 0 12px 24px rgba(37, 211, 102, 0.22);
+}
+
+.modal-sem-contato {
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--texto-claro);
+}
+
+.modal-aviso-login {
+  font-size: 0.92rem;
+  margin-bottom: 14px;
+}
+
 .modal-fechar {
-  margin-top: 18px;
+  width: 100%;
+  margin-top: 4px;
   background: none;
   border: none;
   color: var(--texto-claro);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   cursor: pointer;
   font-family: inherit;
-  padding: 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  transition: background var(--transition), color var(--transition);
 }
+
 .modal-fechar:hover {
+  background: rgba(0, 0, 0, 0.05);
   color: var(--texto);
 }
 
+/* ===== RESPONSIVO ===== */
 @media (max-width: 600px) {
   .filtros {
     flex-direction: column;
   }
+
   .select-especie {
+    width: 100%;
+  }
+
+  .modal-box {
+    padding: 26px 20px;
+  }
+
+  .modal-box h2 {
+    font-size: 1.3rem;
+  }
+
+  .btn-whatsapp,
+  .modal-fechar {
     width: 100%;
   }
 }

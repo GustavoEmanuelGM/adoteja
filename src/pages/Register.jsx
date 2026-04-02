@@ -19,11 +19,11 @@ function Register() {
     setErro('')
     setSucesso('')
 
-    // Validação simples antes de enviar
     if (senha !== confirmaSenha) {
       setErro('As senhas não coincidem.')
       return
     }
+
     if (senha.length < 6) {
       setErro('A senha deve ter pelo menos 6 caracteres.')
       return
@@ -31,37 +31,52 @@ function Register() {
 
     setCarregando(true)
 
-    // Cria conta no Supabase Auth
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password: senha,
-      options: {
-        data: { nome }, // Salva o nome nos metadados do usuário
-      },
-    })
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password: senha,
+        options: {
+          data: { nome },
+        },
+      })
 
-    setCarregando(false)
+      console.log('SIGNUP DATA:', data)
+      console.log('SIGNUP ERROR:', error)
 
-    if (error) {
-      if (error.message.includes('already registered')) {
-        setErro('Este e-mail já está cadastrado. Tente fazer login.')
-      } else {
-        setErro('Erro ao criar conta. Tente novamente.')
+      if (error) {
+        setErro(error.message || 'Erro ao criar conta.')
+        setCarregando(false)
+        return
       }
-      return
-    }
 
-    // Se tudo OK, insere também na tabela profiles
-    if (data.user) {
-      await supabase.from('profiles').insert({
+      if (!data.user) {
+        setErro('Não foi possível criar o usuário.')
+        setCarregando(false)
+        return
+      }
+
+      const { error: profileError } = await supabase.from('profiles').insert({
         id: data.user.id,
         nome,
         email,
       })
-    }
 
-    setSucesso('Conta criada com sucesso! Redirecionando...')
-    setTimeout(() => navigate('/painel'), 1500)
+      console.log('PROFILE ERROR:', profileError)
+
+      if (profileError) {
+        setErro(`Conta criada, mas houve erro ao salvar o perfil: ${profileError.message}`)
+        setCarregando(false)
+        return
+      }
+
+      setSucesso('Conta criada com sucesso! Redirecionando...')
+      setTimeout(() => navigate('/painel'), 1500)
+    } catch (err) {
+      console.error('ERRO INESPERADO:', err)
+      setErro('Erro inesperado ao criar conta.')
+    } finally {
+      setCarregando(false)
+    }
   }
 
   return (

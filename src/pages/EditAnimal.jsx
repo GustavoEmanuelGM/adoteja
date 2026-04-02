@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { supabase } from '../services/supabaseClient'
 import './FormAnimal.css'
-import { IoIosArrowBack } from "react-icons/io";
-import { FiSave } from "react-icons/fi";
+import { IoIosArrowBack } from "react-icons/io"
+import { FiSave } from "react-icons/fi"
 
 function EditAnimal({ user }) {
   const navigate = useNavigate()
@@ -19,6 +19,8 @@ function EditAnimal({ user }) {
     descricao: '',
     foto_url: '',
     status: 'disponivel',
+    nome_tutor: '',
+    telefone: '',
   })
 
   const [foto, setFoto] = useState(null)
@@ -33,18 +35,21 @@ function EditAnimal({ user }) {
       const { data, error } = await supabase
         .from('animals')
         .select(`
-            id,
-            nome,
-            idade,
-            especie,
-            raca,
-            porte,
-            cidade,
-            descricao,
-            foto_url,
-            status,
-            created_at
-          `)
+          id,
+          user_id,
+          nome,
+          idade,
+          especie,
+          raca,
+          porte,
+          cidade,
+          descricao,
+          foto_url,
+          status,
+          nome_tutor,
+          telefone,
+          created_at
+        `)
         .eq('id', id)
         .single()
 
@@ -70,6 +75,8 @@ function EditAnimal({ user }) {
         descricao: data.descricao || '',
         foto_url: data.foto_url || '',
         status: data.status || 'disponivel',
+        nome_tutor: data.nome_tutor || '',
+        telefone: data.telefone || '',
       })
 
       setPreview(data.foto_url || '')
@@ -128,8 +135,8 @@ function EditAnimal({ user }) {
     setErro('')
     setSucesso('')
 
-    if (!form.nome || !form.cidade) {
-      setErro('Preencha ao menos o nome e a cidade.')
+    if (!form.nome || !form.cidade || !form.nome_tutor || !form.telefone) {
+      setErro('Preencha todos os campos obrigatórios.')
       return
     }
 
@@ -137,11 +144,13 @@ function EditAnimal({ user }) {
 
     try {
       const foto_url = await uploadImagem()
+      const telefoneLimpo = form.telefone.replace(/\D/g, '')
 
       const { error } = await supabase
         .from('animals')
         .update({
           ...form,
+          telefone: telefoneLimpo,
           foto_url,
           idade: Number(form.idade) || 0,
         })
@@ -243,6 +252,29 @@ function EditAnimal({ user }) {
                 <input
                   name="cidade"
                   value={form.cidade}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="form-row">
+              <div className="input-group">
+                <label>Nome do tutor *</label>
+                <input
+                  name="nome_tutor"
+                  value={form.nome_tutor}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="input-group">
+                <label>WhatsApp *</label>
+                <input
+                  name="telefone"
+                  placeholder="Ex: 88999999999"
+                  value={form.telefone}
                   onChange={handleChange}
                   required
                 />

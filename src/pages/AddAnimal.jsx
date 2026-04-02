@@ -17,6 +17,8 @@ function AddAnimal({ user }) {
     cidade: '',
     descricao: '',
     status: 'disponivel',
+    nome_tutor: '',
+    telefone: '',
   })
 
   const [foto, setFoto] = useState(null)
@@ -30,9 +32,15 @@ function AddAnimal({ user }) {
 
   function handleFotoChange(e) {
     const arquivo = e.target.files?.[0]
-    if (arquivo) {
-      setFoto(arquivo)
+    if (!arquivo) return
+
+    if (!arquivo.type.startsWith('image/')) {
+      setErro('Selecione um arquivo de imagem válido.')
+      return
     }
+
+    setErro('')
+    setFoto(arquivo)
   }
 
   async function uploadImagem() {
@@ -44,7 +52,11 @@ function AddAnimal({ user }) {
 
     const { error: uploadError } = await supabase.storage
       .from('animais')
-      .upload(caminhoArquivo, foto)
+      .upload(caminhoArquivo, foto, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: foto.type,
+      })
 
     if (uploadError) {
       throw new Error('Erro ao enviar a imagem.')
@@ -62,18 +74,27 @@ function AddAnimal({ user }) {
     setErro('')
     setSucesso('')
 
-    if (!form.nome || !form.cidade) {
-      setErro('Preencha ao menos o nome e a cidade do animal.')
+    if (!form.nome || !form.cidade || !form.nome_tutor || !form.telefone) {
+      setErro('Preencha todos os campos obrigatórios.')
       return
     }
 
     setCarregando(true)
 
     try {
+      const telefoneLimpo = form.telefone.replace(/\D/g, '')
+
+      if (!telefoneLimpo || telefoneLimpo.length < 10) {
+        setErro('Informe um número de WhatsApp válido.')
+        setCarregando(false)
+        return
+      }
+
       const foto_url = await uploadImagem()
 
       const { error } = await supabase.from('animals').insert({
         ...form,
+        telefone: telefoneLimpo,
         foto_url,
         idade: Number(form.idade) || 0,
         user_id: user.id,
@@ -184,6 +205,31 @@ function AddAnimal({ user }) {
                 <option value="adotado">Já foi adotado</option>
               </select>
             </div>
+
+            <div className="form-row">
+              <div className="input-group">
+                <label>Nome do tutor *</label>
+                <input
+                  name="nome_tutor"
+                  placeholder="Seu nome"
+                  value={form.nome_tutor}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+
+              <div className="input-group">
+                <label>WhatsApp *</label>
+                <input
+                  name="telefone"
+                  placeholder="Ex: 88999999999"
+                  value={form.telefone}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+
 
             <div className="input-group">
               <label>Foto do animal</label>
