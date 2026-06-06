@@ -26,6 +26,29 @@ function AddAnimal({ user }) {
   const [sucesso, setSucesso] = useState('')
   const [carregando, setCarregando] = useState(false)
 
+  
+  if (!user) {
+    return (
+      <div className="page-wrapper">
+        <div className="container">
+          <div className="form-animal-card">
+            <div className="form-animal-header">
+              <h1>🔒 Acesso Restrito</h1>
+              <p>Você precisa estar logado para cadastrar um animal.</p>
+            </div>
+            <button 
+              className="btn-primary" 
+              onClick={() => navigate('/login')}
+              style={{ marginTop: 16 }}
+            >
+              Fazer Login
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
@@ -73,6 +96,12 @@ function AddAnimal({ user }) {
     e.preventDefault()
     setErro('')
     setSucesso('')
+
+    //  VERIFICAÇÃO DUPLA DE SEGURANÇA
+    if (!user || !user.id) {
+      setErro('Erro de autenticação. Faça login novamente.')
+      return
+    }
 
     if (!form.nome || !form.cidade || !form.nome_tutor || !form.telefone) {
       setErro('Preencha todos os campos obrigatórios.')

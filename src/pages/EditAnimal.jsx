@@ -9,6 +9,7 @@ function EditAnimal({ user }) {
   const navigate = useNavigate()
   const { id } = useParams()
 
+  // ✅ TODOS OS HOOKS VEM PRIMEIRO
   const [form, setForm] = useState({
     nome: '',
     idade: '',
@@ -85,6 +86,31 @@ function EditAnimal({ user }) {
 
     carregarAnimal()
   }, [id, user.id])
+
+  // 🔒 VERIFICAÇÃO DE AUTENTICAÇÃO (DEPOIS DOS HOOKS)
+  if (!user) {
+    return (
+      <div className="page-wrapper">
+        <div className="container">
+          <div className="form-animal-card">
+            <div className="form-animal-header">
+              <h1>🔒 Acesso Restrito</h1>
+              <p>Você precisa estar logado para editar um animal.</p>
+            </div>
+            <button
+              className="btn-primary"
+              onClick={() => navigate('/login')}
+              style={{ marginTop: 16 }}
+            >
+              Fazer Login
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value })

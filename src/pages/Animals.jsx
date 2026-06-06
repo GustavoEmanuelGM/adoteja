@@ -14,13 +14,15 @@ function Animals({ user }) {
   const [busca, setBusca] = useState('')
   const [filtroEspecie, setFiltroEspecie] = useState('')
   const [modalAnimal, setModalAnimal] = useState(null)
+  const [dadosContato, setDadosContato] = useState(null)
 
   useEffect(() => {
     async function buscarAnimais() {
       setCarregando(true)
 
+      
       const { data, error } = await supabase
-        .from('animals')
+        .from('animals_public') 
         .select(`
           id,
           nome,
@@ -32,8 +34,6 @@ function Animals({ user }) {
           descricao,
           foto_url,
           status,
-          nome_tutor,
-          telefone,
           created_at
         `)
         .order('created_at', { ascending: false })
@@ -60,9 +60,25 @@ function Animals({ user }) {
     return nomeOk && especieOk
   })
 
-  function handleInteresse(animal) {
+  
+  async function handleInteresse(animal) {
     if (animal.status !== 'disponivel') return
+    
     setModalAnimal(animal)
+    setDadosContato(null)  // Reseta dados anteriores
+
+    // Se tiver usuário logado, busca dados completos
+    if (user) {
+      const { data, error } = await supabase
+        .from('animals')  // Tabela completa (RLS vai filtrar)
+        .select('nome_tutor, telefone, user_id')
+        .eq('id', animal.id)
+        .single()
+
+      if (!error && data) {
+        setDadosContato(data)
+      }
+    }
   }
 
   function limparTelefone(numero) {
@@ -147,6 +163,7 @@ function Animals({ user }) {
         )}
       </div>
 
+      
       {modalAnimal && (
         <div className="modal-overlay" onClick={() => setModalAnimal(null)}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
@@ -156,14 +173,29 @@ function Animals({ user }) {
               Entre em contato com o tutor para saber mais sobre <strong>{modalAnimal.nome}</strong>.
             </p>
 
-            <div className="modal-info-animal">
-              <p><strong>Tutor:</strong> {modalAnimal.nome_tutor || 'Não informado'}</p>
-              <p><strong>WhatsApp:</strong> {modalAnimal.telefone || 'Não informado'}</p>
-            </div>
+            {/* MOSTRA DADOS SÓ SE ESTIVER LOGADO */}
+            {user && dadosContato ? (
+              <div className="modal-info-animal">
+                <p><strong>Tutor:</strong> {dadosContato.nome_tutor || 'Não informado'}</p>
+                <p><strong>WhatsApp:</strong> {dadosContato.telefone || 'Não informado'}</p>
+              </div>
+            ) : (
+              <div className="modal-aviso-login" style={{
+                background: '#fff3cd',
+                padding: '12px',
+                borderRadius: '8px',
+                margin: '16px 0',
+                borderLeft: '4px solid #ffc107'
+              }}>
+                <strong>🔒 Dados protegidos</strong>
+                <p>Faça login para ver as informações de contato do tutor.</p>
+              </div>
+            )}
 
-            {modalAnimal.telefone ? (
+            {/* BOTÃO WHATSAPP SÓ APARECE SE TIVER OS DADOS */}
+            {user && dadosContato?.telefone ? (
               <a
-                href={gerarLinkWhatsApp(modalAnimal)}
+                href={gerarLinkWhatsApp({ ...modalAnimal, telefone: dadosContato.telefone })}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-whatsapp"
@@ -172,14 +204,14 @@ function Animals({ user }) {
               </a>
             ) : (
               <p className="modal-sem-contato">
-                <MdPets /> O tutor ainda não informou um número de WhatsApp.
+                <MdPets /> {user ? 'Telefone não informado pelo tutor.' : 'Faça login para ver o contato.'}
               </p>
             )}
 
             {!user && (
-              <p className="modal-aviso-login">
-                Você pode entrar em contato mesmo sem login, mas criar uma conta ajuda a acompanhar melhor os animais disponíveis.
-              </p>
+              <Link to="/login" className="btn-primary" style={{ marginTop: 16, display: 'inline-block' }}>
+                Fazer Login
+              </Link>
             )}
 
             <button className="modal-fechar" onClick={() => setModalAnimal(null)}>

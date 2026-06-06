@@ -11,6 +11,7 @@ import { FaPlus } from "react-icons/fa";
 
 function Dashboard({ user }) {
   const navigate = useNavigate()
+
   const [animais, setAnimais] = useState([])
   const [carregando, setCarregando] = useState(true)
   const [confirmandoId, setConfirmandoId] = useState(null)
@@ -40,6 +41,29 @@ function Dashboard({ user }) {
     }
     carregarMeusAnimais()
   }, [user.id])
+
+
+  if (!user) {
+    return (
+      <div className="page-wrapper">
+        <div className="container">
+          <div className="dashboard-vazio">
+            <h2>🔒 Acesso Restrito</h2>
+            <p>Você precisa estar logado para acessar o painel.</p>
+            <button
+              className="btn-primary"
+              onClick={() => navigate('/login')}
+              style={{ marginTop: 16 }}
+            >
+              Fazer Login
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+
 
   async function handleExcluir(id) {
     const { error } = await supabase
